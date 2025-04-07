@@ -263,3 +263,34 @@ class SortingAlgorithms:
                     arr[j], arr[j + 1] = arr[j + 1], arr[j]
         return arr
 
+    # Méthodo: Double Bubble Sort (Cocktail Shaker Sort)
+    def double_bubble_sort(self, arr, key=lambda x: x, search_value=None):
+        """
+        Implementa el méthodo doble burbuja (Cocktail Shaker Sort) que
+        recorre el arreglo en ambas direcciones en cada iteración.
+        """
+        effective_key = self._get_effective_key(key, search_value)
+        n = len(arr)
+        start = 0
+        end = n - 1
+        swapped = True
+        while swapped:
+            swapped = False
+            # Recorrido de izquierda a derecha
+            for i in range(start, end):
+                if effective_key(arr[i]) > effective_key(arr[i + 1]):
+                    arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                    swapped = True
+            if not swapped:
+                break
+            # Se reinicia la bandera para el recorrido inverso
+            swapped = False
+            end -= 1
+            # Recorrido de derecha a izquierda
+            for i in range(end, start, -1):
+                if effective_key(arr[i - 1]) > effective_key(arr[i]):
+                    arr[i], arr[i - 1] = arr[i - 1], arr[i]
+                    swapped = True
+            start += 1
+        return arr
+
